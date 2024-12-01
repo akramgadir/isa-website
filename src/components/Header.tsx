@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Header = ({ showLoginButton = false, showSignUpButton = false }) => {
+const Header = ({ showLoginButton = false, showSignUpButton = false, showHomeButton = false }) => {
   return (
     <header className="bg-white py-4 px-6 flex items-center justify-between">
       <div>
@@ -10,18 +10,26 @@ const Header = ({ showLoginButton = false, showSignUpButton = false }) => {
       <div className="flex gap-4">
         {showLoginButton && (
           <Link to="/login">
-            <button className="bg-white border border-gray-300 rounded px-4 py-2">
+            <button className="bg-white border border-gray-300 rounded-3xl px-3 py-2 lg:w-36">
               Log In
             </button>
           </Link>
         )}
         {showSignUpButton && (
           <Link to="/signup">
-            <button className="bg-pink-500 text-white border border-pink-500 rounded px-4 py-2">
-              Sign Up
+            <button className="bg-pink-500 text-white border border-pink-500 rounded-3xl px-3 py-2 lg:w-36">
+              Get Started
             </button>
           </Link>
-        )}
+          )}
+          {showHomeButton && (
+            <Link to="/">
+            <button className='bg-pink-500 text-white border border-pink-500 rounded-3xl px-3 py-2 lg:w-36'>
+            Home
+            </button>
+            </Link>
+          )
+          }
       </div>
     </header>
   );

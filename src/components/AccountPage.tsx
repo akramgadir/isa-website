@@ -2,17 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import { db } from '../firebaseConfig';
 import { doc, getDoc, collection, addDoc } from 'firebase/firestore';
+import Header from './Header'
 
 const AccountPage = () => {
-  const [user, setUser] = useState<User | null>(null); // Allow 'User' or 'null'
-  const [userData, setUserData] = useState<any>(null); // Simplified to 'any'
-  const [selectedFund, setSelectedFund] = useState<string>(''); // String type
-  const [investmentAmount, setInvestmentAmount] = useState<string>(''); // String type
-  const [errorMessage, setErrorMessage] = useState<string>(''); // String type
-  const [successMessage, setSuccessMessage] = useState<string>(''); // String type
+  const [user, setUser] = useState<User | null>(null)
+  const [userData, setUserData] = useState<any>(null)
+  const [selectedFund, setSelectedFund] = useState<string>('')
+  const [investmentAmount, setInvestmentAmount] = useState<string>('')
+  const [errorMessage, setErrorMessage] = useState<string>('')
+  const [successMessage, setSuccessMessage] = useState<string>('')
   const auth = getAuth();
 
-  const isaAnnualLimit = 20000; // Annual ISA limit
+  const isaAnnualLimit = 20000; // annual ISA limit
   const funds = [
     'Cushon Equities Fund',
     'Cushon Ethical Fund',
@@ -73,7 +74,7 @@ const AccountPage = () => {
       }
     } catch (error) {
       console.error('Error saving investment:', error);
-      setErrorMessage('Something went wrong. Please try again.');
+      setErrorMessage('Error: Please try again.');
     }
   };
 
@@ -82,7 +83,8 @@ const AccountPage = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4">
+      <Header showHomeButton={true} />
       <h1 className="text-2xl font-bold mb-4">Your Account</h1>
       {userData && (
         <div className="mb-4">

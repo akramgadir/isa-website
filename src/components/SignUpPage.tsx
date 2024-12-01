@@ -5,30 +5,28 @@ import { db } from '../firebaseConfig';
 import { collection, doc, setDoc } from 'firebase/firestore';
 import Header from './Header';
 const SignUpPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [repeatPassword, setRepeatPassword] = useState('');
-  const [title, setTitle] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [postcode, setPostcode] = useState('');
-  const [subscribedToNewsletter, setSubscribedToNewsletter] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const navigate = useNavigate();
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [repeatPassword, setRepeatPassword] = useState('')
+  const [title, setTitle] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [postcode, setPostcode] = useState('')
+  const [subscribedToNewsletter, setSubscribedToNewsletter] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+  const navigate = useNavigate()
 
   const auth = getAuth();
 
-  const handleSignUp = async (e: React.FormEvent) => {
+  const handleSignUp = async (e: any) => {
     e.preventDefault();
-
     if (password !== repeatPassword) {
-      setErrorMessage('Passwords do not match.');
+      setErrorMessage('Please enter the same password both times.');
       return;
     }
-
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user; //create new user
+      const user = userCredential.user; //create new user using Firebase
 
       await setDoc(doc(collection(db, 'users'), user.uid), { //store the data in firestore
         email,
@@ -38,11 +36,11 @@ const SignUpPage = () => {
         postcode,
         subscribedToNewsletter,
       });
-
-      navigate('/account'); //redirect them straight to the account page
-    } catch (error: any) {
+      navigate('/account'); //if successful redirect them straight to the account page
+    }
+    catch (error: any) {
       console.error('Error signing up:', error);
-      setErrorMessage(error.message || 'Something went wrong. Please try again.');
+      setErrorMessage(error.message || 'Error: Please try again.');
     }
   };
 
@@ -51,7 +49,7 @@ const SignUpPage = () => {
   };
 
   return (
-    <div>
+    <div className='container'>
       <Header showLoginButton={true} showSignUpButton={false} />
       <div className="flex flex-col items-center px-4 py-8">
         <h1 className="text-2xl font-bold mb-6">Register for an Account</h1>
