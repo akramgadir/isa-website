@@ -49,7 +49,7 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className='container'>
+    <div>
       <Header showLoginButton={true} showSignUpButton={false} />
       <div className="flex flex-col items-center px-4 py-8">
         <h1 className="text-2xl font-bold mb-6">Register for an Account</h1>

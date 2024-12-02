@@ -11,6 +11,12 @@ module.exports = {
       height: {
         54: "54px",
       },
+      fontSize: {
+        28: "28px",
+      },
+      padding: {
+        154: "154px",
+      },
     },
   },
   plugins: [],

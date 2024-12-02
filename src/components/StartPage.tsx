@@ -2,41 +2,44 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 
-const IndividualPage = () => {
+const StartPage = () => {
   const navigate = useNavigate();
 
-  const handleYesClick = () => {
+  const handleIndividualClick = () => {
     navigate('/login');
-  };
-
-  const handleNoClick = () => {
-    navigate('/no-account');
   };
 
   return (
     <div className="bg-customCream">
       <Header showLoginButton={true} showSignUpButton={true} />
       <div className="flex flex-col items-center px-4 py-12">
-        <h2 className="text-28 text-customGrey mb-6">
-          Do you already have a Workplace Pension or ISA with Cushon?
-        </h2>
+        <h2 className="text-2xl font-bold mb-6">How can we help you today?</h2>
         <div className="flex flex-col gap-4 w-full max-w-md">
           <button
-            onClick={handleYesClick}
             className="w-full bg-white text-customGrey font-bold p-6 rounded-2xl border hover:border-customPink text-left shadow-md"
+            disabled
           >
-            Yes, I do have a pension or ISA
+            Employer
             <p className="text-sm font-normal text-gray-500 mt-2">
-              Access your workplace pension or ISA via web or download our app
+              Log in to manage your Cushon pension or complete your application.
             </p>
           </button>
           <button
-            onClick={handleNoClick}
+            className="w-full bg-white text-customGrey font-bold p-6 rounded-2xl border hover:border-customPink text-left shadow-md"
+            disabled
+          >
+            Advisor / Accountant
+            <p className="text-sm font-normal text-gray-500 mt-2">
+              Log in to manage Cushon clients, or sign up new clients to our workplace pensions.
+            </p>
+          </button>
+          <button
+            onClick={handleIndividualClick}
             className="w-full bg-white text-customGrey font-bold p-6 rounded-2xl border hover:border-customPink text-left shadow-md"
           >
-            No, I don’t have a pension or ISA
+            Individual
             <p className="text-sm font-normal text-gray-500 mt-2">
-              Please note: we do not currently offer personal pensions, only workplace ones.
+              Check on your existing Cushon account or set up a new savings account with us.
             </p>
           </button>
         </div>
@@ -45,4 +48,4 @@ const IndividualPage = () => {
   );
 };
 
-export default IndividualPage;
+export default StartPage;

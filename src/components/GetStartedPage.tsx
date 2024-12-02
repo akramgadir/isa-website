@@ -10,10 +10,10 @@ const GetStartedPage = () => {
   };
 
   return (
-    <div className='container bg-customCream'>
+    <div className='bg-customCream'>
       <Header showLoginButton={true} showSignUpButton={true} />
-      <div className="flex flex-col items-center px-4 py-12">
-        <h2 className="text-2xl font-bold mb-6">What best describes you?</h2>
+      <div className="flex flex-col items-center px-154 py-12 m-auto">
+        <h2 className="text-28 text-customGrey mb-6">What best describes you?</h2>
         <div className="flex flex-col gap-4 w-full max-w-md">
           <button
             onClick={handleIndividualClick}

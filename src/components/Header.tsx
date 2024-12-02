@@ -17,7 +17,7 @@ const Header = ({ showLoginButton = false, showSignUpButton = false, showGetStar
         </Link>
         )}
         {showLoginButton && (
-          <Link to="/login">
+          <Link to="/start">
             <button className="bg-customPink text-white border border-white rounded-3xl px-3 py-2 lg:w-36">
               Log In
             </button>

@@ -7,6 +7,8 @@ import LoginPage from './components/LoginPage';
 import AccountPage from './components/AccountPage';
 import GetStartedPage from './components/GetStartedPage';
 import IndividualPage from './components/IndividualPage';
+import NoAccountPage from './components/NoAccountPage';
+import StartPage from './components/StartPage';
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route path="/account" element={<AccountPage />} />
         <Route path="/get-started" element={<GetStartedPage/>} />
         <Route path="/individual" element={<IndividualPage/>} />
+        <Route path="/no-account" element={<NoAccountPage/>} />
+        <Route path="/start" element={<StartPage/>} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>

@@ -13,7 +13,7 @@ const AccountPage = () => {
   const [successMessage, setSuccessMessage] = useState<string>('')
   const auth = getAuth();
 
-  const isaAnnualLimit = 20000; // annual ISA limit
+  const isaAnnualLimit = 20000;
   const funds = [
     'Cushon Equities Fund',
     'Cushon Ethical Fund',
@@ -21,28 +21,28 @@ const AccountPage = () => {
   ];
 
   useEffect(() => {
-    // Listen for authentication changes
+    // listener for authentication changes
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
 
-        // Fetch user data from Firestore
+        // fetch user data from firestore
         const userDocRef = doc(db, 'users', currentUser.uid);
         const userDoc = await getDoc(userDocRef);
         if (userDoc.exists()) {
-          setUserData(userDoc.data());
+          setUserData(userDoc.data()); //store their data in our userData state
         }
       }
     });
 
-    return () => unsubscribe();
+    return () => unsubscribe(); //clean up the listener when the component unmounts
   }, [auth]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const amount = parseFloat(investmentAmount);
 
-    // Validate the input
+    // validate the input
     if (!selectedFund) {
       setErrorMessage('Please select a fund.');
       return;
@@ -83,11 +83,11 @@ const AccountPage = () => {
   }
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="mx-auto">
       <Header showHomeButton={true} />
-      <h1 className="text-2xl font-bold mb-4">Your Account</h1>
       {userData && (
-        <div className="mb-4">
+        <div className="mb-4 text-center">
+          <h1 className="text-2xl font-bold mb-4">Your Account</h1>
           <p>
             <strong>Name:</strong> {userData.title || ''} {userData.firstName || ''}{' '}
             {userData.lastName || ''}
