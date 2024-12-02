@@ -6,7 +6,7 @@ const NoAccountPage = () => {
   return (
     <div className="bg-customCream">
       <Header showLoginButton={true} showSignUpButton={true} />
-      <div className="flex flex-col items-center px-4 py-12">
+      <div className="flex flex-col items-center px-4 py-4 lg:py-12">
         <h2 className="text-28 text-customGrey mb-6">
         What product are you interested in?
         </h2>

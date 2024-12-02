@@ -1,76 +1,112 @@
 import React, { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import { db } from '../firebaseConfig';
-import { doc, getDoc, collection, addDoc } from 'firebase/firestore';
-import Header from './Header'
+import { doc, getDoc, collection, addDoc, setDoc } from 'firebase/firestore';
+import Header from './Header';
 
 const AccountPage = () => {
   const [user, setUser] = useState<User | null>(null)
   const [userData, setUserData] = useState<any>(null)
   const [selectedFund, setSelectedFund] = useState<string>('')
-  const [investmentAmount, setInvestmentAmount] = useState<string>('')
+  const [investmentAmount, setInvestmentAmount] = useState<string>('') //TODO: parse to a float later since browsers take inputs as strings
   const [errorMessage, setErrorMessage] = useState<string>('')
   const [successMessage, setSuccessMessage] = useState<string>('')
   const auth = getAuth();
 
   const isaAnnualLimit = 20000;
   const funds = [
-    'Cushon Equities Fund',
-    'Cushon Ethical Fund',
-    'Cushon Sustainable Fund',
+    'Low-Risk Fund',
+    'Moderate-Risk Fund',
+    'High-Risk Fund',
   ];
 
+  //triggers on log in or log out
   useEffect(() => {
     // listener for authentication changes
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
 
-        // fetch user data from firestore
+        // fetch user data from firestore to our React state
         const userDocRef = doc(db, 'users', currentUser.uid);
         const userDoc = await getDoc(userDocRef);
         if (userDoc.exists()) {
           setUserData(userDoc.data()); //store their data in our userData state
+          // console.log('userDoc.data: ', userDoc.data())
         }
       }
     });
 
-    return () => unsubscribe(); //clean up the listener when the component unmounts
+    return () => unsubscribe(); //clean up the listener on unmount
   }, [auth]);
+
+  const getTaxYear = (currentDate: Date): string => { //alternative: try with npm install tax-year
+    const year = currentDate.getFullYear();
+    const taxYearStart = new Date(year, 3, 6); //for April 6th of the current year
+    if (currentDate < taxYearStart) { //if the date is before April 6th then we look at the previous tax year
+      return `${year - 1}-${year}`; 
+    }
+    else return `${year}-${year + 1}`;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const amount = parseFloat(investmentAmount);
 
-    // validate the input
     if (!selectedFund) {
       setErrorMessage('Please select a fund.');
       return;
     }
-    if (isNaN(amount) || amount <= 0) {
+    else if (isNaN(amount) || amount <= 0) { //less strict than typeof(amount) !== 'number' in case they enter it as a string
       setErrorMessage('Please enter a valid investment amount.');
       return;
     }
-    if (amount > isaAnnualLimit) {
-      setErrorMessage(`You cannot legally invest more than £${isaAnnualLimit} in an ISA per tax year.`);
-      return;
-    }
-
-    setErrorMessage('');
 
     try {
-      // save the investment to Firestore
       if (user) {
+        const now = new Date();
+        const taxYear = getTaxYear(now);
+
+        // fetch user's investment total from Firestore
+        const userDocRef = doc(db, 'users', user.uid);
+        const userDoc = await getDoc(userDocRef);
+
+        let investmentTotals: { [key: string]: number} = {};
+        if (userDoc.exists() && userDoc.data().investmentTotals) {
+          investmentTotals = userDoc.data().investmentTotals;
+        }
+
+        // calculate total for the current tax year
+        const totalInvestedThisYear = investmentTotals[taxYear] || 0;
+
+        if (totalInvestedThisYear + amount > isaAnnualLimit) {
+          setErrorMessage(
+            `You have already invested £${totalInvestedThisYear.toFixed(
+              2
+            )} this tax year. Adding £${amount.toFixed(
+              2
+            )} would exceed the £${isaAnnualLimit} annual limit.`
+          );
+          return;
+        }
+
+        // update the total for the current tax year
+        investmentTotals[taxYear] = totalInvestedThisYear + amount;
+
+        // save the updated totals and new investment
         const investmentsCollection = collection(db, 'users', user.uid, 'investments');
         await addDoc(investmentsCollection, {
           fund: selectedFund,
           amount,
-          date: new Date(),
+          date: now,
         });
+
+        await setDoc(userDocRef, { investmentTotals }, { merge: true });
 
         setSuccessMessage('Investment recorded successfully!');
         setSelectedFund('');
         setInvestmentAmount('');
+        setErrorMessage('');
       }
     } catch (error) {
       console.error('Error saving investment:', error);
@@ -86,26 +122,23 @@ const AccountPage = () => {
     <div className="mx-auto">
       <Header showHomeButton={true} />
       {userData && (
-        <div className="mb-4 text-center">
+        <div className="mx-4 my-4 text-center">
           <h1 className="text-2xl font-bold mb-4">Your Account</h1>
           <p>
-            <strong>Name:</strong> {userData.title || ''} {userData.firstName || ''}{' '}
+            <span>Name:</span> {userData.title || ''} {userData.firstName || ''}{' '}
             {userData.lastName || ''}
           </p>
           <p>
-            <strong>Email:</strong> {userData.email || ''}
-          </p>
-          <p>
-            <strong>Account Type:</strong> {userData.accountType || ''}
+            <span>Email:</span> {userData.email || ''}
           </p>
         </div>
       )}
-      <form onSubmit={handleSubmit} className="max-w-md mx-auto">
         {errorMessage && (
-          <div className="bg-red-100 text-red-700 p-2 mb-4 rounded">
+          <div className="bg-red-100 text-red-700 p-2 mb-4 rounded max-w-md mx-auto">
             {errorMessage}
           </div>
         )}
+      <form onSubmit={handleSubmit} className="max-w-md mx-auto border border-customPink lg:rounded p-4">
         {successMessage && (
           <div className="bg-green-100 text-green-700 p-2 mb-4 rounded">
             {successMessage}

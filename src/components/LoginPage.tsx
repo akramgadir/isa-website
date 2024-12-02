@@ -30,7 +30,7 @@ const LoginPage = () => {
   return (
     <div>
         <Header showSignUpButton={true} />
-        <div className="flex flex-col items-center px-4 py-8">
+        <div className="flex flex-col items-center px-4 py-4  lg:py-8">
         <h1 className="text-2xl text-bold mb-6 text-left">Login to your account</h1>
         {errorMessage && (
             <div className="mb-4 p-2 text-red-700 border border-red-700 rounded">
