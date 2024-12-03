@@ -50,7 +50,7 @@ const SignUpPage = () => {
 
   return (
     <div>
-      <Header showLoginButton={true} showSignUpButton={false} />
+      <Header showLoginButton={true} showSignUpButton={false} showHomeButton={true} />
       <div className="flex flex-col items-center px-4 py-4 lg:py-8">
         <h1 className="text-2xl font-bold mb-6">Register for an Account</h1>
         {errorMessage && (

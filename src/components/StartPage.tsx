@@ -11,7 +11,7 @@ const StartPage = () => {
 
   return (
     <div className="bg-customCream">
-      <Header showLoginButton={true} showSignUpButton={true} />
+      <Header showLoginButton={false} showSignUpButton={true} showHomeButton={true}/>
       <div className="flex flex-col items-center px-4 py-12">
         <h2 className="text-2xl font-bold mb-6">How can we help you today?</h2>
         <div className="flex flex-col gap-4 w-full max-w-md">
@@ -21,7 +21,7 @@ const StartPage = () => {
           >
             Employer
             <p className="text-sm font-normal text-gray-500 mt-2">
-              Log in to manage your Cushon pension or complete your application.
+              Log in to manage your pension or complete your application.
             </p>
           </button>
           <button
@@ -30,7 +30,7 @@ const StartPage = () => {
           >
             Advisor / Accountant
             <p className="text-sm font-normal text-gray-500 mt-2">
-              Log in to manage Cushon clients, or sign up new clients to our workplace pensions.
+              Log in to manage clients, or sign up new clients to our workplace pensions.
             </p>
           </button>
           <button
@@ -39,7 +39,7 @@ const StartPage = () => {
           >
             Individual
             <p className="text-sm font-normal text-gray-500 mt-2">
-              Check on your existing Cushon account or set up a new savings account with us.
+              Check on your existing account or set up a new savings account with us.
             </p>
           </button>
         </div>

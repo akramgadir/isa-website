@@ -9,6 +9,7 @@ import GetStartedPage from './components/GetStartedPage';
 import IndividualPage from './components/IndividualPage';
 import NoAccountPage from './components/NoAccountPage';
 import StartPage from './components/StartPage';
+import MyInvestmentsPage from './components/MyInvestmentsPage';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/individual" element={<IndividualPage/>} />
         <Route path="/no-account" element={<NoAccountPage/>} />
         <Route path="/start" element={<StartPage/>} />
+        <Route path="/my-investments" element={<MyInvestmentsPage/>} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>

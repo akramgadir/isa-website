@@ -3,6 +3,7 @@ import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import { db } from '../firebaseConfig';
 import { doc, getDoc, collection, addDoc, setDoc } from 'firebase/firestore';
 import Header from './Header';
+import { Link } from 'react-router-dom';
 
 const AccountPage = () => {
   const [user, setUser] = useState<User | null>(null)
@@ -121,7 +122,7 @@ const AccountPage = () => {
 
   return (
     <div className="mx-auto">
-      <Header showHomeButton={true} />
+      <Header showHomeButton={true} showLogoutButton={true} />
       {userData && (
         <div className="mx-4 my-4 text-center">
           <h1 className="text-2xl font-bold mb-4">Your Account</h1>
@@ -177,6 +178,11 @@ const AccountPage = () => {
           Invest Now
         </button>
       </form>
+        <Link to='/my-investments'>
+      <div className='flex justify center mt-6'>
+        <button className='max-w-md mx-auto border border-2 border-customPink lg:rounded p-4 hover:bg-customPink text-customGrey'>View My Investments</button>
+      </div>
+        </Link>
     </div>
   );
 };
