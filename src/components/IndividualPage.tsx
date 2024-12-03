@@ -18,7 +18,7 @@ const IndividualPage = () => {
       <Header showLoginButton={true} showSignUpButton={true} />
       <div className="flex flex-col items-center px-4 lg:px-4 py-4 lg:py-12">
         <h2 className="text-28 text-customGrey mb-6">
-          Do you already have a Workplace Pension or ISA with Cushon?
+          Do you already have a Workplace Pension or ISA with us?
         </h2>
         <div className="flex flex-col gap-4 w-full max-w-md">
           <button

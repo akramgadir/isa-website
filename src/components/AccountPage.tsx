@@ -79,6 +79,7 @@ const AccountPage = () => {
         // calculate total for the current tax year
         const totalInvestedThisYear = investmentTotals[taxYear] || 0;
 
+
         if (totalInvestedThisYear + amount > isaAnnualLimit) {
           setErrorMessage(
             `You have already invested £${totalInvestedThisYear.toFixed(
@@ -93,7 +94,7 @@ const AccountPage = () => {
         // update the total for the current tax year
         investmentTotals[taxYear] = totalInvestedThisYear + amount;
 
-        // save the updated totals and new investment
+        // create/save the updated totals and new investment
         const investmentsCollection = collection(db, 'users', user.uid, 'investments');
         await addDoc(investmentsCollection, {
           fund: selectedFund,
@@ -131,6 +132,7 @@ const AccountPage = () => {
           <p>
             <span>Email:</span> {userData.email || ''}
           </p>
+          {/* TODO: display their investmentTotals for each year from the object my backend */}
         </div>
       )}
         {errorMessage && (
@@ -145,7 +147,7 @@ const AccountPage = () => {
           </div>
         )}
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">Select Fund</label>
+          <label className="block text-customGrey text-sm font-bold mb-2">Select Fund</label>
           <select
             value={selectedFund}
             onChange={(e) => setSelectedFund(e.target.value)}
@@ -160,7 +162,7 @@ const AccountPage = () => {
           </select>
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">Investment Amount (£)</label>
+          <label className="block text-customGrey text-sm font-bold mb-2">Investment Amount (£)</label>
           <input
             type="number"
             value={investmentAmount}

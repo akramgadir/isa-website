@@ -106,6 +106,7 @@ const SignUpPage = () => {
               <option value="">-- Select --</option>
               <option value="Mr">Mr</option>
               <option value="Ms">Ms</option>
+              <option value="Mrs">Mrs</option>
               <option value="Dr">Dr</option>
             </select>
           </div>

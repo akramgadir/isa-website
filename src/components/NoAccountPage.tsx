@@ -10,9 +10,10 @@ const NoAccountPage = () => {
         <h2 className="text-28 text-customGrey mb-6">
         What product are you interested in?
         </h2>
+        {/* TODO: currently this takes us to the real link, but we can code this workflow fully later if necessary. The sign up / login workflows are the completed ones for this task. */}
         <div className="flex flex-col gap-4 w-full max-w-md">
           <a
-            href="https://www.cushon.co.uk/isa"
+            href="https://shorturl.at/0OXyH"
             className="w-full bg-white text-customGrey font-bold p-6 rounded-2xl border hover:border-customPink text-left shadow-md"
           >
             ISA
