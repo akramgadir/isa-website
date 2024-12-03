@@ -17,6 +17,9 @@ module.exports = {
       padding: {
         154: "154px",
       },
+      fontFamily: {
+        sans: ["Museo Sans", "sans-serif"],
+      },
     },
   },
   plugins: [],
