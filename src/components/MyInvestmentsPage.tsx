@@ -70,7 +70,7 @@ const MyInvestmentsPage = () => {
   return (
     <div className='flex flex-col'>
       <Header showMyAccount={true} showLogoutButton={true}/>
-      <div className="border border-customPink border-4 rounded-3xl mt-4 mx-4 p-4 mb-4 w-64 self-center">
+      <div className="border border-customPink border-4 rounded-3xl mt-6 mx-4 p-4 mb-4 w-64 self-center">
       <h2 className="font-bold text-xl">Investment Summary</h2>
       <p className='text-sm self-center mb-2'> 06/04/{currentTaxYear} - 05/04/{currentTaxYear + 1} </p>
       <p>
@@ -91,7 +91,7 @@ const MyInvestmentsPage = () => {
       investments.map((investment) => (
         <div
           key={investment.id}
-          className="border border-2 border-customGrey rounded p-4 mb-4"
+          className="border border-2 border-customGrey rounded p-4 mb-4 shadow-xl"
         >
           <p>
             <span className="font-bold">Fund:</span> {investment.fund}
@@ -100,7 +100,8 @@ const MyInvestmentsPage = () => {
             <span className="font-bold">Amount:</span> £{investment.amount.toFixed(2)}
           </p>
           <p>
-            <span className="font-bold">Date:</span> {new Date(investment.date.seconds * 1000).toLocaleDateString()}
+            {/* displaying the time in a way that is clear for users globally */}
+            <span className="font-bold">Date:</span> {new Date(investment.date.seconds * 1000).toString()} 
           </p>
         </div>
       ))
