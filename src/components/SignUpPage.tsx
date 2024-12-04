@@ -26,7 +26,7 @@ const SignUpPage = () => {
     }
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user; //create new user using Firebase
+      const user = userCredential.user; // create new user using Firebase
 
       await setDoc(doc(collection(db, 'users'), user.uid), { //store the data in firestore
         email,
@@ -36,7 +36,7 @@ const SignUpPage = () => {
         postcode,
         subscribedToNewsletter,
       });
-      navigate('/account'); //if successful redirect them straight to the account page
+      navigate('/account'); // if successful redirect them straight to the account page
     }
     catch (error: any) {
       console.error('Error signing up:', error);
@@ -63,7 +63,6 @@ const SignUpPage = () => {
           <button type="button" onClick={redirectToLogin} className="block text-sm font-bold mb-2">
             Already have an account?
           </button>
-          {/* email and password */}
           <div>
             <label className="block text-sm font-bold mb-2">Email</label>
             <input
@@ -94,8 +93,6 @@ const SignUpPage = () => {
               required
               />
           </div>
-
-          {/* name and address */}
           <div>
             <label className="block text-sm font-bold mb-2">Title</label>
             <select
@@ -108,6 +105,7 @@ const SignUpPage = () => {
               <option value="Ms">Ms</option>
               <option value="Mrs">Mrs</option>
               <option value="Dr">Dr</option>
+              <option value="Sir">Sir</option>
             </select>
           </div>
           <div>

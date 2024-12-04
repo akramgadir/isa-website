@@ -21,9 +21,8 @@ const AccountPage = () => {
     'High-Risk Fund',
   ];
 
-  //triggers on log in or log out
+  // triggers every log in and log out
   useEffect(() => {
-    // listener for authentication changes
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
@@ -32,19 +31,19 @@ const AccountPage = () => {
         const userDocRef = doc(db, 'users', currentUser.uid);
         const userDoc = await getDoc(userDocRef);
         if (userDoc.exists()) {
-          setUserData(userDoc.data()); //store their data in our userData state
+          setUserData(userDoc.data()); // store their data in our userData state
           // console.log('userDoc.data: ', userDoc.data())
         }
       }
     });
 
-    return () => unsubscribe(); //clean up the listener on unmount
+    return () => unsubscribe(); // clean up the listener on unmount
   }, [auth]);
 
-  const getTaxYear = (currentDate: Date): string => { //alternative: try with npm install tax-year
+  const getTaxYear = (currentDate: Date): string => { // alternative: try with npm install tax-year
     const year = currentDate.getFullYear();
-    const taxYearStart = new Date(year, 3, 6); //for April 6th of the current year
-    if (currentDate < taxYearStart) { //if the date is before April 6th then we look at the previous tax year
+    const taxYearStart = new Date(year, 3, 6); // for April 6th of the current year
+    if (currentDate < taxYearStart) { // if the date is before April 6th then we look at the previous tax year
       return `${year - 1}-${year}`; 
     }
     else return `${year}-${year + 1}`;
@@ -58,7 +57,7 @@ const AccountPage = () => {
       setErrorMessage('Please select a fund.');
       return;
     }
-    else if (isNaN(amount) || amount <= 0) { //less strict than typeof(amount) !== 'number' in case they enter it as a string
+    else if (isNaN(amount) || amount <= 0) { // less strict than typeof(amount) !== 'number' in case they enter it as a string
       setErrorMessage('Please enter a valid investment amount.');
       return;
     }
@@ -77,7 +76,6 @@ const AccountPage = () => {
           investmentTotals = userDoc.data().investmentTotals;
         }
 
-        // calculate total for the current tax year
         const totalInvestedThisYear = investmentTotals[taxYear] || 0;
 
 

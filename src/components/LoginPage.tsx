@@ -17,13 +17,11 @@ const LoginPage = () => {
     try {
       // attempt to log in with firebase authentication
       await signInWithEmailAndPassword(auth, email, password);
-
-      // redirect to accountpage on successful login
       navigate('/account');
     } catch (error: any) {
-      console.error('login error:', error);
+      console.error('Login error:', error);
       setErrorMessage(
-        error.message || 'invalid email or password. please try again.'
+        error.message || 'Invalid email or password. Please try again.'
       );
     }
   };

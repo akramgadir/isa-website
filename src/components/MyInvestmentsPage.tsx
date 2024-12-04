@@ -9,12 +9,9 @@ const MyInvestmentsPage = () => {
   const [userData, setUserData] = useState<any>(null)
   const [investments, setInvestments] = useState<any[]>([]);
   const isaAnnualLimit = 20000;
-
   const auth = getAuth()
   
-  //triggers on log in or log out
   useEffect(() => {
-    // listener for authentication changes
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
@@ -31,7 +28,7 @@ const MyInvestmentsPage = () => {
   }, [auth]);
 
   useEffect(() => {
-    const fetchInvestments = async () => {//fetching investments document from firestore
+    const fetchInvestments = async () => { //fetching investments document from firestore
       if (user) {
         const investmentsRef = collection(db, 'users', user.uid, 'investments');
         const currentInvestments = await getDocs(investmentsRef);
